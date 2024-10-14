@@ -1,0 +1,41 @@
+{% include 'includes/header.html' %}
+
+<div class="container mt-5">
+    <!-- Hata mesajlarını gösteriyoruz -->
+    {% if messages %}
+        <div class="alert alert-danger">
+            {% for message in messages %}
+                {{ message }}
+            {% endfor %}
+        </div>
+    {% endif %}
+    <h2>Parçalar</h2>
+    <a href="{% url 'part_create' %}" class="btn btn-primary mb-3">Yeni Parça Üret</a>
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>Ad</th>
+                <th>Tip</th>
+                <th>Stok Adedi</th>
+                <th>İşlemler</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for part in parts %}
+            <tr>
+                <td>{{ part.name }}</td>
+                <td>{{ part.get_part_type_display }}</td>
+                <td>{{ part.stock_quantity }}</td>
+                <td>
+                    <form method="POST" action="{% url 'part_delete' part.pk %}">
+                        {% csrf_token %}
+                        <button type="submit" class="btn btn-danger">Geri Dönüşüme Gönder</button>
+                    </form>                    
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+{% include 'includes/footer.html' %}

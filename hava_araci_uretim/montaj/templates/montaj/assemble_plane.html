@@ -1,0 +1,34 @@
+{% include 'includes/header.html' %}
+
+<div class="container mt-5">
+    <h2>Uçak Montajı</h2>
+
+    <form method="POST">
+        {% csrf_token %}
+        <div class="form-group">
+            <label for="plane_id">Montaj Yapılacak Uçak:</label>
+            <select name="plane_id" class="form-control" required>
+                {% for plane in planes %}
+                    <option value="{{ plane.id }}" {% if plane.id == selected_plane %}selected{% endif %}>
+                        {{ plane.name }}
+                    </option>
+                {% endfor %}
+            </select>
+        </div>
+        <button type="submit" class="btn btn-primary mt-3">Montajı Tamamla</button>
+    </form>
+
+    {% if missing_parts %}
+        <div class="alert alert-warning mt-3">
+            <strong>Eksik Parçalar:</strong>
+            <ul>
+                {% for part in missing_parts %}
+                    <li>{{ part }}</li>
+                {% endfor %}
+            </ul>
+        </div>
+    {% endif %}
+</div>
+
+
+{% include 'includes/footer.html' %}

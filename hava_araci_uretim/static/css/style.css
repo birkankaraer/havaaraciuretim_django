@@ -1,0 +1,70 @@
+/* Genel Arkaplan Rengi */
+body {
+    background-color: #f8f9fa; /* Açık gri */
+}
+
+/* Navbar Arkaplan ve Buton Renkleri */
+.navbar {
+    background-color: #343a40;
+}
+
+.navbar-brand, .nav-link {
+    color: #ffffff;
+}
+
+.nav-link.active {
+    font-weight: bold;
+}
+
+.btn-outline-success {
+    border-color: #28a745;
+    color: #28a745;
+}
+
+/* Oturum aç ve çıkış butonlarının özelleştirilmesi */
+.btn-danger {
+    background-color: #dc3545;
+    border-color: #dc3545;
+}
+
+/* Sayfanın tamamını kapsayan container */
+html, body {
+    height: 70%;
+    margin: 0;
+}
+
+/* Sayfa içeriğinin minimum yüksekliği */
+.container {
+    min-height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+/* İçerik alanı */
+#content {
+    flex: 1 0 auto; /* İçeriğin sayfa boyunca yayılmasını sağlar */
+}
+
+/* Footer alanı sabitlenmiş */
+#footer {
+    flex-shrink: 0; /* Footer'ın sabitlenmesini sağlar */
+    background-color: #343a40; /* Siyah renk */
+    color: #ffffff; /* Beyaz yazı */
+    padding: 20px;
+}
+
+/* Footer'daki linkler beyaz olacak */
+#footer a {
+    color: #ffffff;
+}
+
+#footer a:hover {
+    text-decoration: underline;
+}
+
+/* Sosyal medya ikonlarının boyutu ve rengi */
+.social-icons i {
+    font-size: 24px;
+    margin-right: 10px;
+    color: #ffffff;
+}

@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang="tr">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>{{ title }}</title>
+    <!-- Bootstrap CDN -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    {% load static %}
+    <link href="{% static 'css/style.css' %}" rel="stylesheet">
+  </head>
+  <body>
+
+  <header>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+      <div class="container">
+        <a class="navbar-brand" href="/">Hava Aracı Üretim Uygulaması</a> <!-- Proje adı uygun olacak şekilde güncellendi -->
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+    
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+          <ul class="navbar-nav ms-auto">
+            <li class="nav-item">
+              <a class="nav-link active" aria-current="page" href="/">Ana Sayfa</a>
+            </li>
+    
+            {% if request.user.is_authenticated %}
+              {% if not request.user.is_staff %}
+                <li class="nav-item">
+                  <a class="nav-link" href="/uretim/parts/">Parçalar</a> <!-- Uygulamaya uygun sayfa linkleri -->
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="/my-parts">Takımımın Parçaları</a> <!-- Kullanıcı parçaları listeleme -->
+                </li>
+              {% else %}
+                <li class="nav-item">
+                  <a class="nav-link" href="/assembly">Montaj</a> <!-- Montaj işlemi linki -->
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="/inventory">Envanter</a> <!-- Envanter sayfası linki -->
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="/personnel">Personel</a> <!-- Personel yönetim sayfası -->
+                </li>
+              {% endif %}
+            {% endif %}
+          </ul>
+    
+          <div class="d-flex">
+            {% if request.user.is_authenticated %}
+    <a class="btn btn-danger ms-3" href="{% url 'logout' %}">Çıkış Yap</a>
+{% else %}
+    <a class="btn btn-outline-success" href="{% url 'login' %}">Oturum Aç</a>
+{% endif %}
+          </div>
+        </div>
+      </div>
+    </nav>
+    
+    <section id="topMessage">
+        <div class="card text-bg-dark border-o text-white text-center">
+            {% load static %}
+          <div class="d-flex justify-content-center">
+              <img src="{% static 'img/aircraft.png' %}" class="card-img" style="width:100%;max-width:600px;height:auto;" alt="Hava Aracı">
+          </div>
+          <div class="card-img-overlay">
+            <h5 class="card-title">Hava Aracı Üretim Yönetimi</h5> <!-- Kart başlığı düzenlendi -->
+            <p class="card-text">Hava Aracı Üretimi ve Montajı</p> <!-- Uygulamaya uygun metin -->
+          </div>
+        </div>
+    </section>
+   </header>
+  <div class="container">

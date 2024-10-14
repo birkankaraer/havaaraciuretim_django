@@ -1,0 +1,13 @@
+{% include 'includes/header.html' %}
+
+<div class="container mt-5">
+    <h2>Personeli Sil</h2>
+    <p>Personeli silmek istediğinizden emin misiniz: <strong>{{ personnel.name }}</strong>?</p>
+    <form method="post">
+        {% csrf_token %}
+        <button type="submit" class="btn btn-danger">Sil</button>
+        <a href="{% url 'personnel_list' %}" class="btn btn-secondary">İptal</a>
+    </form>
+</div>
+
+{% include 'includes/footer.html' %}
