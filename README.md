@@ -37,6 +37,9 @@ Kullanılan Teknolojiler
 ![Ekran görüntüsü 2024-10-15 045438](https://github.com/user-attachments/assets/a152282b-ce75-40ff-a630-35a9100b02bf)
 11- Uçaklar için bütün parçaları oluşturup monte ettikten sonra kullanılan parçaların sayısını ve hangi uçakta kullanıldığının bilgisi tutuluyor.
 ![FireShot Capture 175 -  - 127 0 0 1](https://github.com/user-attachments/assets/d219e3f4-754e-4d46-9d42-05f032f8cc38)
+12- Veri tabanı diyagramı 
+![Untitled](https://github.com/user-attachments/assets/a109e43b-ec02-42d0-b450-22cf0342b019)
+
 
 
 
