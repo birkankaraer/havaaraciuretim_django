@@ -3,6 +3,7 @@ from .models import Assembly, AssemblyPart
 from uretim.models import Plane, Part
 from django.contrib import messages
 from django.http import HttpResponseForbidden
+from django.utils import timezone
 
 # uçak montajı için gerekli fonksiyon
 def assemble_plane(request):
@@ -60,6 +61,8 @@ def assemble_plane(request):
 def montaj_success(request):
     return render(request, 'montaj/montaj_success.html')
 
+from django.utils import timezone
+
 def assembly_report(request):
     # Tüm montajları ve ilgili parçaları alıyoruz
     assemblies = Assembly.objects.all().prefetch_related('assemblypart_set')
@@ -67,12 +70,16 @@ def assembly_report(request):
     # Her montaj için kullanılan parçaları topluyoruz
     assembly_data = []
     for assembly in assemblies:
+        # Montaj tarihini Türkiye saatine göre ayarlıyoruz
+        date_assembled_tz = timezone.localtime(assembly.date_assembled, timezone.get_current_timezone())
+        
         parts_used = AssemblyPart.objects.filter(assembly=assembly)
         assembly_data.append({
             'plane': assembly.plane.name,
-            'date_assembled': assembly.date_assembled,
+            'date_assembled': date_assembled_tz.strftime('%d/%m/%Y %H:%M'),  # Türkiye tarih ve saat formatı
             'status': assembly.get_status_display(),
             'parts': parts_used,
         })
     
     return render(request, 'montaj/assembly_report.html', {'assembly_data': assembly_data})
+

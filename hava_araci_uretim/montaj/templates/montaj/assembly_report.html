@@ -21,7 +21,7 @@
                     <td>
                         <ul>
                             {% for part in assembly.parts %}
-                                <li>{{ part.part.name }} - {{ part.quantity_used }} adet</li>
+                                <li>{{ part.part.part_type }} - {{ part.quantity_used }} adet</li>
                             {% endfor %}
                         </ul>
                     </td>
