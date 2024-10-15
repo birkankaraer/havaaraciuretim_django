@@ -2,8 +2,13 @@ from django.shortcuts import render, redirect
 from .models import Assembly, AssemblyPart
 from uretim.models import Plane, Part
 from django.contrib import messages
+from django.http import HttpResponseForbidden
 
+# uçak montajı için gerekli fonksiyon
 def assemble_plane(request):
+    # Eğer kullanıcının takımı montaj takımı değilse erişimi engelle
+    if request.user.personnel.team.name != 'MONTAJ':
+        return HttpResponseForbidden("Bu sayfaya erişim izniniz yoktur.")
     if request.method == 'POST':
         plane_id = request.POST.get('plane_id')  # Seçilen uçağı alıyoruz
         plane = Plane.objects.get(id=plane_id)
@@ -15,10 +20,10 @@ def assemble_plane(request):
         # Eksik parçaları kontrol et
         missing_parts = []
         for part_type in parts_needed:
-            # Parçanın hem stokta olup olmadığını hem de uçakta kullanılıp kullanılmadığını kontrol ediyoruz
-            part = Part.objects.filter(part_type=part_type, stock_quantity__gt=0).first()
+            # Seçilen uçağa ait olan ve stokta bulunan parçaları filtreliyoruz
+            part = Part.objects.filter(part_type=part_type, stock_quantity__gt=0, plane=plane).first()
             
-            # Eğer parça stokta yoksa eksik olarak işaretle
+            # Eğer parça stokta yoksa veya başka bir uçakta kullanıldıysa eksik olarak işaretle
             if not part:
                 missing_parts.append(part_type)
             else:
@@ -30,10 +35,9 @@ def assemble_plane(request):
 
             # Formu yeniden render ederken seçili uçağı koruyoruz
             return render(request, 'montaj/assemble_plane.html', {
-                'plane': plane,  # Seçilen uçağı formda tekrar göstermek için context'e ekliyoruz
-                'missing_parts': missing_parts,
                 'planes': Plane.objects.all(),  # Tüm uçakları tekrar gösteriyoruz
-                'selected_plane': plane_id  # Seçilen uçağı formda tekrar seçili göstermek için
+                'selected_plane': plane_id,  # Seçilen uçağı formda tekrar seçili göstermek için
+                'missing_parts': missing_parts  # Eksik parçaları gösteriyoruz
             })
         
         # Eğer tüm parçalar mevcutsa montajı başlat
@@ -42,7 +46,7 @@ def assemble_plane(request):
             # Her bir parçayı montaja ekle ve stoktan düş
             AssemblyPart.objects.create(assembly=assembly, part=part, quantity_used=1)
             part.stock_quantity -= 1
-            part.plane = plane  # Parçayı uçakla ilişkilendiriyoruz
+            part.plane = plane
             part.save()
 
         messages.success(request, f'{plane.name} başarıyla monte edildi!')
@@ -52,8 +56,23 @@ def assemble_plane(request):
     planes = Plane.objects.all()  # Montaj yapılacak uçakları listeliyoruz
     return render(request, 'montaj/assemble_plane.html', {'planes': planes})
 
-
-
 # Montaj başarıyla tamamlandığında bu işlev çalışacak
 def montaj_success(request):
     return render(request, 'montaj/montaj_success.html')
+
+def assembly_report(request):
+    # Tüm montajları ve ilgili parçaları alıyoruz
+    assemblies = Assembly.objects.all().prefetch_related('assemblypart_set')
+    
+    # Her montaj için kullanılan parçaları topluyoruz
+    assembly_data = []
+    for assembly in assemblies:
+        parts_used = AssemblyPart.objects.filter(assembly=assembly)
+        assembly_data.append({
+            'plane': assembly.plane.name,
+            'date_assembled': assembly.date_assembled,
+            'status': assembly.get_status_display(),
+            'parts': parts_used,
+        })
+    
+    return render(request, 'montaj/assembly_report.html', {'assembly_data': assembly_data})

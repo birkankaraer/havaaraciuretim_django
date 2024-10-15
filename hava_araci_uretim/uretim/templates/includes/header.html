@@ -20,55 +20,70 @@
         </button>
     
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
-          <ul class="navbar-nav ms-auto">
-            <li class="nav-item">
-              <a class="nav-link active" aria-current="page" href="/">Ana Sayfa</a>
-            </li>
-    
-            {% if request.user.is_authenticated %}
-              {% if not request.user.is_staff %}
+          <ul class="navbar-nav">
+            <!-- Montaj Takımı kullanıcıları için -->
+            {% if request.user.personnel.team.name == 'MONTAJ' %}
                 <li class="nav-item">
-                  <a class="nav-link" href="/uretim/parts/">Parçalar</a> <!-- Uygulamaya uygun sayfa linkleri -->
+                  <a class="btn btn-primary me-2" href="{% url 'assemble_plane' %}">Uçak Montajı</a>
                 </li>
                 <li class="nav-item">
-                  <a class="nav-link" href="/my-parts">Takımımın Parçaları</a> <!-- Kullanıcı parçaları listeleme -->
+                  <a class="btn btn-secondary me-2" href="{% url 'assembly_report' %}">Montaj Raporları</a>
                 </li>
-              {% else %}
+        
+            <!-- Kanat Takımı kullanıcıları için -->
+            {% elif request.user.personnel.team.name == 'KANAT' %}
                 <li class="nav-item">
-                  <a class="nav-link" href="/assembly">Montaj</a> <!-- Montaj işlemi linki -->
+                  <a class="btn btn-primary me-2" href="{% url 'team_parts_list' %}">Kanat Takımı Parçaları</a>
                 </li>
                 <li class="nav-item">
-                  <a class="nav-link" href="/inventory">Envanter</a> <!-- Envanter sayfası linki -->
+                  <a class="btn btn-secondary me-2" href="{% url 'part_create' %}">Yeni Parça Üret</a>
+                </li>
+        
+            <!-- Gövde Takımı kullanıcıları için -->
+            {% elif request.user.personnel.team.name == 'GOVDE' %}
+                <li class="nav-item">
+                  <a class="btn btn-primary me-2" href="{% url 'team_parts_list' %}">Gövde Takımı Parçaları</a>
                 </li>
                 <li class="nav-item">
-                  <a class="nav-link" href="/personnel">Personel</a> <!-- Personel yönetim sayfası -->
+                  <a class="btn btn-secondary me-2" href="{% url 'part_create' %}">Yeni Parça Üret</a>
                 </li>
-              {% endif %}
+        
+            <!-- Kuyruk Takımı kullanıcıları için -->
+            {% elif request.user.personnel.team.name == 'KUYRUK' %}
+                <li class="nav-item">
+                  <a class="btn btn-primary me-2" href="{% url 'team_parts_list' %}">Kuyruk Takımı Parçaları</a>
+                </li>
+                <li class="nav-item">
+                  <a class="btn btn-secondary me-2" href="{% url 'part_create' %}">Yeni Parça Üret</a>
+                </li>
+        
+            <!-- Aviyonik Takımı kullanıcıları için -->
+            {% elif request.user.personnel.team.name == 'AVIYONIK' %}
+                <li class="nav-item">
+                  <a class="btn btn-primary me-2" href="{% url 'team_parts_list' %}">Aviyonik Takımı Parçaları</a>
+                </li>
+                <li class="nav-item">
+                  <a class="btn btn-secondary me-2" href="{% url 'part_create' %}">Yeni Parça Üret</a>
+                </li>
             {% endif %}
-          </ul>
+        </ul>
+        
     
           <div class="d-flex">
             {% if request.user.is_authenticated %}
-    <a class="btn btn-danger ms-3" href="{% url 'logout' %}">Çıkış Yap</a>
-{% else %}
-    <a class="btn btn-outline-success" href="{% url 'login' %}">Oturum Aç</a>
-{% endif %}
+              <a class="btn btn-danger ms-3" href="{% url 'logout' %}">Çıkış Yap</a>
+            {% else %}
+              <a class="btn btn-outline-success" href="{% url 'login' %}">Oturum Aç</a>
+            {% endif %}
           </div>
         </div>
       </div>
     </nav>
     
-    <section id="topMessage">
-        <div class="card text-bg-dark border-o text-white text-center">
-            {% load static %}
-          <div class="d-flex justify-content-center">
-              <img src="{% static 'img/aircraft.png' %}" class="card-img" style="width:100%;max-width:600px;height:auto;" alt="Hava Aracı">
-          </div>
-          <div class="card-img-overlay">
-            <h5 class="card-title">Hava Aracı Üretim Yönetimi</h5> <!-- Kart başlığı düzenlendi -->
-            <p class="card-text">Hava Aracı Üretimi ve Montajı</p> <!-- Uygulamaya uygun metin -->
-          </div>
-        </div>
-    </section>
-   </header>
+    
+    <div class="d-flex justify-content-center">
+      <img src="{% static 'img/aircraft.png' %}" class="card-img" style="width:100%;max-width:600px;height:auto;" alt="Hava Aracı">
+    </div>
+          
+  </header>
   <div class="container">

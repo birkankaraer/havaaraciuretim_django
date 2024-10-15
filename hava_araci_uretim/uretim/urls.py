@@ -23,4 +23,5 @@ urlpatterns = [
     path('parts/', views.part_list, name='part_list'),
     path('parts/create/', views.part_create, name='part_create'),
     path('parts/delete/<int:pk>/', views.part_delete, name='part_delete'),
+    path('team-parts/', views.team_parts_list, name='team_parts_list'),  # Takım parçaları için yol
 ]

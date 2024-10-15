@@ -1,5 +1,4 @@
 {% include 'includes/header.html' %}
-
 <div class="container mt-5">
     <!-- Hata mesajlarını gösteriyoruz -->
     {% if messages %}
@@ -9,14 +8,17 @@
             {% endfor %}
         </div>
     {% endif %}
+    
     <h2>Parçalar</h2>
     <a href="{% url 'part_create' %}" class="btn btn-primary mb-3">Yeni Parça Üret</a>
+    
     <table class="table table-bordered">
         <thead>
             <tr>
                 <th>Ad</th>
                 <th>Tip</th>
                 <th>Stok Adedi</th>
+                <th>Uçağa Ait</th>  <!-- Yeni Sütun: Parçanın ait olduğu uçak -->
                 <th>İşlemler</th>
             </tr>
         </thead>
@@ -26,6 +28,7 @@
                 <td>{{ part.name }}</td>
                 <td>{{ part.get_part_type_display }}</td>
                 <td>{{ part.stock_quantity }}</td>
+                <td>{% if part.plane %}{{ part.plane.name }}{% else %}Yok{% endif %}</td> <!-- Uçak adı gösterimi -->
                 <td>
                     <form method="POST" action="{% url 'part_delete' part.pk %}">
                         {% csrf_token %}
@@ -37,5 +40,4 @@
         </tbody>
     </table>
 </div>
-
 {% include 'includes/footer.html' %}

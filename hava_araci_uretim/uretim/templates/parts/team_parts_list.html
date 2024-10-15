@@ -1,0 +1,36 @@
+{% include 'includes/header.html' %}
+
+<div class="container mt-5">
+    <h2>Takımımın Parçaları</h2>
+
+    {% if error %}
+        <div class="alert alert-danger">{{ error }}</div>
+    {% endif %}
+
+    {% if parts %}
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th>Ad</th>
+                    <th>Tip</th>
+                    <th>Stok Adedi</th>
+                    <th>Uçağa Ait</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for part in parts %}
+                <tr>
+                    <td>{{ part.name }}</td>
+                    <td>{{ part.get_part_type_display }}</td>
+                    <td>{{ part.stock_quantity }}</td>
+                    <td>{% if part.plane %}{{ part.plane.name }}{% else %}Yok{% endif %}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        <p>Takımınıza ait parça bulunmamaktadır.</p>
+    {% endif %}
+</div>
+
+{% include 'includes/footer.html' %}

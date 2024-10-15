@@ -1,0 +1,12 @@
+{% include 'includes/header.html' %}
+
+<div class="container mt-5">
+    <h2>Kayıt Ol</h2>
+    <form method="POST">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit" class="btn btn-success">Kayıt Ol</button>
+    </form>
+</div>
+
+{% include 'includes/footer.html' %}

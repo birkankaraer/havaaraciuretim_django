@@ -6,6 +6,7 @@ from django.contrib import messages
 from django.shortcuts import render, redirect,  get_object_or_404
 from .forms import PartForm
 from django.contrib.auth.decorators import login_required
+from django.http import HttpResponseForbidden
 
 
 # Parça (Part) modeli için ViewSet
@@ -107,8 +108,31 @@ def part_create(request):
 
 
 # Parça Silme (Geri Dönüşüme Gönderme)
+# Parça Silme (Geri Dönüşüme Gönderme)
 def part_delete(request, pk):
     part = get_object_or_404(Part, pk=pk)
-    if part.team == request.user.personnel.team:  # Kullanıcı yalnızca kendi takımına ait parçayı silebilir
-        part.delete()
+    
+    # Kullanıcı yalnızca kendi takımına ait parçayı silebilir
+    if part.team == request.user.personnel.team:
+        if part.stock_quantity > 1:
+            part.stock_quantity -= 1  # Stok adedinden 1 düşüyoruz
+            part.save()
+            messages.success(request, 'Parçadan 1 adet geri dönüşüme gönderildi.')
+        else:
+            part.delete()  # Eğer stok adedi 1 ise parçayı tamamen siliyoruz
+            messages.success(request, 'Parça tamamen geri dönüşüme gönderildi.')
+    
     return redirect('part_list')
+
+@login_required
+def team_parts_list(request):
+    user_team = request.user.personnel.team.name
+    allowed_teams = ['KANAT', 'GOVDE', 'KUYRUK', 'AVIYONIK']
+
+    # Eğer kullanıcının takımı izin verilen takımlar arasında değilse erişimi engelle
+    if user_team not in allowed_teams:
+        return HttpResponseForbidden("Bu sayfaya erişim izniniz yoktur.")
+    
+    # Takımın parçalarını listeleme işlemi devam eder...
+    parts = Part.objects.filter(team=request.user.personnel.team)
+    return render(request, 'parts/part_list.html', {'parts': parts})
