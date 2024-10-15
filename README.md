@@ -3,7 +3,7 @@ Docker: Projenin Docker ile ayağa kalkması sağlanmalı. Dockerfile ve docker-
 Dokümantasyon: İyi yorumlanmış kod ve API dokümantasyonu sağlanmalı. Swagger kullanılabilir.
 Birim Testleri: Django’nun test framework'ü ile unit testler yazılabilir.
 
-#Hava Aracı Üretim Uygulaması
+##Hava Aracı Üretim Uygulaması
 
 Kullanılan Teknolojiler
 1) Python
