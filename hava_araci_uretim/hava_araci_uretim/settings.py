@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/5.0/ref/settings/
 """
 
 from pathlib import Path
+import os
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -28,7 +29,7 @@ DEBUG = True
 ALLOWED_HOSTS = []
 
 
-# Application definition
+# Projeye yüklenen uygulamaları kullanabilmemiz için bu diziye eklememiz gerekiyor.
 
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -37,12 +38,11 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    # Diğer yüklü uygulamalar burada listelenmiştir.
-    'uretim',  # Yeni oluşturulan app'i buraya ekliyoruz.
-    'rest_framework',  # API işlemleri için Django Rest Framework'ü de ekliyoruz.
-    # Diğer gerekli uygulamalar burada. 
+    'uretim',  
+    'rest_framework',   
     'personnel',
     'montaj',
+    'drf_yasg',
 ]
 
 MIDDLEWARE = [
@@ -82,6 +82,7 @@ WSGI_APPLICATION = 'hava_araci_uretim.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
 
+#localde çalışan database için 
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
@@ -93,6 +94,17 @@ DATABASES = {
     }
 }
 
+# Docker için veritabanı yapılandırması
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.postgresql',
+#         'NAME': os.getenv('POSTGRES_DB', 'hava_araci_uretim'),
+#         'USER': os.getenv('POSTGRES_USER', 'postgres'),
+#         'PASSWORD': os.getenv('POSTGRES_PASSWORD', 'Data1234'),
+#         'HOST': 'db',  # Docker Compose içindeki PostgreSQL hizmetine işaret ediyor
+#         'PORT': '5432',
+#     }
+# }
 
 
 # Password validation
@@ -132,11 +144,10 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/5.0/howto/static-files/
 
 STATIC_URL = '/static/'
-
-# Statik dosyalar için dizin
 STATICFILES_DIRS = [
     BASE_DIR / "static",
 ]
+STATIC_ROOT = BASE_DIR / 'staticfiles'  # Production için statik dosyaları toplama yeri
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field

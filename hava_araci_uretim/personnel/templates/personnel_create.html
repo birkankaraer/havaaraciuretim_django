@@ -2,10 +2,16 @@
 
 <div class="container mt-5">
     <h2>Yeni Personel Ekle</h2>
+    
+    <!-- Yeni personel ekleme formu -->
     <form method="post">
-        {% csrf_token %}
-        {{ form.as_p }}
+        {% csrf_token %}  <!-- CSRF koruma tokeni ekleniyor -->
+        {{ form.as_p }}  <!-- Form alanlarını dikey olarak düzenle (form.as_p) -->
+        
+        <!-- Personel ekle butonu -->
         <button type="submit" class="btn btn-success">Personel Ekle</button>
+        
+        <!-- Geri butonu, personel listesine yönlendirir -->
         <a href="{% url 'personnel_list' %}" class="btn btn-secondary">Geri</a>
     </form>
 </div>

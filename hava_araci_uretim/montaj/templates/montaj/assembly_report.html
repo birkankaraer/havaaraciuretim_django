@@ -1,27 +1,32 @@
-{% include 'includes/header.html' %}
+{% include 'includes/header.html' %} <!-- Ortak header'ı dahil et -->
 
 <div class="container mt-5">
+    <!-- Montaj Raporu Başlığı -->
     <h2>Uçak Montaj Raporu</h2>
 
+    <!-- Montaj raporlarını tablo olarak gösterme -->
     <table class="table table-bordered">
         <thead>
+            <!-- Tablo başlıkları -->
             <tr>
-                <th>Uçak</th>
-                <th>Montaj Tarihi</th>
-                <th>Durum</th>
-                <th>Kullanılan Parçalar</th>
+                <th>Uçak</th> <!-- Uçağın adı -->
+                <th>Montaj Tarihi</th> <!-- Montajın tamamlandığı tarih -->
+                <th>Durum</th> <!-- Montaj durumu (Tamamlandı, Eksik) -->
+                <th>Kullanılan Parçalar</th> <!-- Montajda kullanılan parçalar -->
             </tr>
         </thead>
         <tbody>
+            <!-- Montaj verilerini döngü ile listeleme -->
             {% for assembly in assembly_data %}
                 <tr>
-                    <td>{{ assembly.plane }}</td>
-                    <td>{{ assembly.date_assembled }}</td>
-                    <td>{{ assembly.status }}</td>
+                    <td>{{ assembly.plane }}</td> <!-- Uçağın adı -->
+                    <td>{{ assembly.date_assembled }}</td> <!-- Montaj tarihi -->
+                    <td>{{ assembly.status }}</td> <!-- Montaj durumu -->
                     <td>
+                        <!-- Kullanılan parçaları listeleme -->
                         <ul>
                             {% for part in assembly.parts %}
-                                <li>{{ part.part.part_type }} - {{ part.quantity_used }} adet</li>
+                                <li>{{ part.part.part_type }} - {{ part.quantity_used }} adet</li> <!-- Parça türü ve kullanılan miktar -->
                             {% endfor %}
                         </ul>
                     </td>
@@ -31,4 +36,4 @@
     </table>
 </div>
 
-{% include 'includes/footer.html' %}
+{% include 'includes/footer.html' %} <!-- Ortak footer'ı dahil et -->

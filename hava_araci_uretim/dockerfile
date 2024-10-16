@@ -1,0 +1,23 @@
+# Python 3.12 image'ı kullanıyoruz
+FROM python:3.12
+
+# Uygulamanın çalışma dizinini belirliyoruz
+WORKDIR /app
+
+# Gereksinim dosyalarını kopyalıyoruz
+COPY requirements.txt /app/
+
+# Gerekli Python paketlerini kuruyoruz
+RUN pip install --no-cache-dir -r requirements.txt
+
+# iputils-ping paketini yükleyin (isteğe bağlı, debugging için)
+RUN apt-get update && apt-get install -y iputils-ping
+
+# Proje dosyalarını kopyalıyoruz
+COPY . /app/
+
+# Statik dosyaları topluyoruz (production için önemlidir)
+RUN python manage.py collectstatic --noinput
+
+# Django sunucusunu çalıştırıyoruz
+CMD ["gunicorn", "hava_araci_uretim.wsgi:application", "--bind", "0.0.0.0:8000"]

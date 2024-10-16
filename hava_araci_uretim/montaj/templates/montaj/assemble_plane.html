@@ -3,25 +3,33 @@
 <div class="container mt-5">
     <h2>Uçak Montajı</h2>
 
+    <!-- Montaj formu başlıyor -->
     <form method="POST">
-        {% csrf_token %}
+        {% csrf_token %} <!-- CSRF koruması için token -->
+        
+        <!-- Uçak seçimi için dropdown -->
         <div class="form-group">
             <label for="plane_id">Montaj Yapılacak Uçak:</label>
             <select name="plane_id" class="form-control" required>
+                <!-- Tüm uçakları döngü ile listele -->
                 {% for plane in planes %}
                     <option value="{{ plane.id }}" {% if plane.id == selected_plane %}selected{% endif %}>
-                        {{ plane.name }}
+                        {{ plane.name }} <!-- Uçağın ismini göster -->
                     </option>
                 {% endfor %}
             </select>
         </div>
+        
+        <!-- Form gönderme butonu -->
         <button type="submit" class="btn btn-primary mt-3">Montajı Tamamla</button>
     </form>
 
+    <!-- Eksik parçalar varsa uyarı göster -->
     {% if missing_parts %}
         <div class="alert alert-warning mt-3">
             <strong>Eksik Parçalar:</strong>
             <ul>
+                <!-- Eksik parçaları listele -->
                 {% for part in missing_parts %}
                     <li>{{ part }}</li>
                 {% endfor %}
@@ -29,6 +37,5 @@
         </div>
     {% endif %}
 </div>
-
 
 {% include 'includes/footer.html' %}

@@ -9,20 +9,20 @@ from django.contrib.auth.decorators import login_required
 from django.http import HttpResponseForbidden
 
 
-# Parça (Part) modeli için ViewSet
 class PartViewSet(viewsets.ModelViewSet):
     queryset = Part.objects.all()
     serializer_class = PartSerializer
+    http_method_names = ['get', 'post', 'put', 'delete']  # Sadece gerekli metotlar
 
-# Uçak (Plane) modeli için ViewSet
 class PlaneViewSet(viewsets.ModelViewSet):
     queryset = Plane.objects.all()
     serializer_class = PlaneSerializer
+    http_method_names = ['get', 'post']  # Sadece listeleme ve oluşturma
 
-# Takım (Team) modeli için ViewSet
 class TeamViewSet(viewsets.ModelViewSet):
     queryset = Team.objects.all()
     serializer_class = TeamSerializer
+    http_method_names = ['get']  # Sadece listeleme işlemi
 
 def custom_login_view(request):
     if request.method == 'POST':
@@ -60,6 +60,7 @@ def part_list(request):
         return redirect('login')  # Eğer bir hata varsa giriş sayfasına yönlendirin
 
 # Parça Üretme (Ekleme)
+@login_required
 def part_create(request):
     if request.method == 'POST':
         form = PartForm(request.POST)
@@ -108,7 +109,7 @@ def part_create(request):
 
 
 # Parça Silme (Geri Dönüşüme Gönderme)
-# Parça Silme (Geri Dönüşüme Gönderme)
+@login_required
 def part_delete(request, pk):
     part = get_object_or_404(Part, pk=pk)
     

@@ -6,9 +6,9 @@ from django.contrib.auth import views as auth_views
 
 # Router'ı tanımlıyoruz
 router = DefaultRouter()
-router.register(r'parts-api', PartViewSet)  # API için ayrı bir yol tanımlıyoruz
+router.register(r'parts-api', PartViewSet)
 router.register(r'planes-api', PlaneViewSet)
-router.register(r'teams-api', TeamViewSet)
+router.register(r'teams-api', TeamViewSet, basename='team')
 
 # URL'leri tanımlıyoruz
 urlpatterns = [

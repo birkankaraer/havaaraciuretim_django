@@ -3,33 +3,35 @@
 <div class="container mt-5">
     <h2>Takımımın Parçaları</h2>
 
+    <!-- Hata mesajlarını gösteriyoruz, eğer bir hata varsa -->
     {% if error %}
         <div class="alert alert-danger">{{ error }}</div>
     {% endif %}
 
+    <!-- Takıma ait parçalar listeleniyor -->
     {% if parts %}
         <table class="table table-bordered">
             <thead>
                 <tr>
-                    <th>Ad</th>
-                    <th>Tip</th>
-                    <th>Stok Adedi</th>
-                    <th>Uçağa Ait</th>
+                    <th>Ad</th> <!-- Parçanın adı -->
+                    <th>Tip</th> <!-- Parçanın tipi -->
+                    <th>Stok Adedi</th> <!-- Parçanın stok adedi -->
+                    <th>Uçağa Ait</th> <!-- Parçanın ait olduğu uçak bilgisi -->
                 </tr>
             </thead>
             <tbody>
                 {% for part in parts %}
                 <tr>
-                    <td>{{ part.name }}</td>
-                    <td>{{ part.get_part_type_display }}</td>
-                    <td>{{ part.stock_quantity }}</td>
-                    <td>{% if part.plane %}{{ part.plane.name }}{% else %}Yok{% endif %}</td>
+                    <td>{{ part.name }}</td> <!-- Parçanın adı -->
+                    <td>{{ part.get_part_type_display }}</td> <!-- Parçanın tipi -->
+                    <td>{{ part.stock_quantity }}</td> <!-- Parçanın stok adedi -->
+                    <td>{% if part.plane %}{{ part.plane.name }}{% else %}Yok{% endif %}</td> <!-- Parçanın ait olduğu uçak bilgisi -->
                 </tr>
                 {% endfor %}
             </tbody>
         </table>
     {% else %}
-        <p>Takımınıza ait parça bulunmamaktadır.</p>
+        <p>Takımınıza ait parça bulunmamaktadır.</p> <!-- Eğer takımın parçası yoksa bu mesaj gösterilir -->
     {% endif %}
 </div>
 

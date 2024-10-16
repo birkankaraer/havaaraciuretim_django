@@ -1,0 +1,40 @@
+services:
+  db:
+    image: postgres:14
+    environment:
+      POSTGRES_DB: hava_araci_uretim
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: Data1234
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    networks:
+      - app-network
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  web:
+    build: .
+    command: gunicorn hava_araci_uretim.wsgi:application --bind 0.0.0.0:8000
+    volumes:
+      - .:/app
+    ports:
+      - "8000:8000"
+    environment:
+      - DEBUG=False
+      - DJANGO_SECRET_KEY=your-secret-key
+      - DJANGO_SETTINGS_MODULE=hava_araci_uretim.settings
+    depends_on:
+      db:
+        condition: service_healthy
+    networks:
+      - app-network
+
+volumes:
+  postgres_data:
+
+networks:
+  app-network:
+    driver: bridge

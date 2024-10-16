@@ -1,12 +1,13 @@
 {% include 'includes/header.html' %}
 
 <div class="container mt-5">
-    <h2>Personeli Sil</h2>
-    <p>Personeli silmek istediğinizden emin misiniz: <strong>{{ personnel.name }}</strong>?</p>
-    <form method="post">
-        {% csrf_token %}
-        <button type="submit" class="btn btn-danger">Sil</button>
-        <a href="{% url 'personnel_list' %}" class="btn btn-secondary">İptal</a>
+    <h2>Personeli Sil</h2>  <!-- Personeli silme işlemi başlığı -->
+    <p>Personeli silmek istediğinizden emin misiniz: <strong>{{ personnel.name }}</strong>?</p>  <!-- Silinmek istenen personelin adıyla onay isteği -->
+    
+    <form method="post">  <!-- Form başlangıcı, veriler POST yöntemiyle gönderilecek -->
+        {% csrf_token %}  <!-- CSRF koruması için token ekleniyor -->
+        <button type="submit" class="btn btn-danger">Sil</button>  <!-- Silme işlemi için buton -->
+        <a href="{% url 'personnel_list' %}" class="btn btn-secondary">İptal</a>  <!-- Silme işlemini iptal etmek için geri butonu -->
     </form>
 </div>
 
