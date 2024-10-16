@@ -55,6 +55,10 @@ Bu proje, SOLID prensipleri ve DRY prensiplerine uyularak, yazılım mimarisine 
 **Kullanılan Parçaların Takibi:** Montaj sonrası kullanılan parçalar ve uçak bilgisi kaydedilir.
 ![montajrapor](https://github.com/user-attachments/assets/47d61e63-6319-4c23-a64c-38218d672ad6)
 
+**Veritabanı Şeması** Veritabanı şeması.
+![veritabanısemasi](https://github.com/user-attachments/assets/cf81239c-a441-415a-9041-95985bab4c45)
+
+
 ## Bonus Özellikler
 - **Docker ile Çalışma:** Proje Docker ile ayağa kaldırılabilir.
 - **İyi Hazırlanmış Dökümantasyon:** Proje dökümantasyonu ve yorum satırları detaylıdır.
@@ -149,70 +153,7 @@ python manage.py migrate
 ```
 
 <h3>Docker ile Projeyi Ayağa Kaldırma</h3>
-Proje Docker ile çalıştırılmak üzere yapılandırılmıştır. Aşağıdaki adımları izleyerek projeyi Docker üzerinde ayağa kaldırabilirsiniz.
-
-Adımlar:
-Docker ve Docker Compose Yükleyin: Eğer sisteminizde yüklü değilse, Docker ve Docker Compose’u yükleyin.
-Dockerfile ve docker-compose.yml Dosyalarını Ayarlayın: Projeye uygun bir Dockerfile ve docker-compose.yml dosyası oluşturun veya mevcut dosyaları kullanın.
-Dockerfile:
-```
- # Base image
-FROM python:3.9-slim
-
-# Set environment variables
-ENV PYTHONDONTWRITEBYTECODE=1
-ENV PYTHONUNBUFFERED=1
-
-# Set working directory
-WORKDIR /app
-
-# Install dependencies
-COPY requirements.txt .
-RUN pip install -r requirements.txt
-
-# Copy project files
-COPY . .
-
-# Command to run the application
-CMD ["python", "manage.py", "runserver", "0.0.0.0:8000"]
-```
-docker-compose.yml:
-```
- version: '3.9'
-
-services:
-  web:
-    build: .
-    command: python manage.py runserver 0.0.0.0:8000
-    volumes:
-      - .:/app
-    ports:
-      - "8000:8000"
-    depends_on:
-      - db
-
-  db:
-    image: postgres
-    environment:
-      POSTGRES_DB: your_db_name
-      POSTGRES_USER: your_db_user
-      POSTGRES_PASSWORD: your_db_password
-    volumes:
-      - postgres_data:/var/lib/postgresql/data/
-
-volumes:
-  postgres_data:
-```
-Docker ile Uygulamayı Çalıştırın: Docker Compose kullanarak tüm servisleri başlatmak için aşağıdaki komutu çalıştırın:
-```
- docker-compose up --build
-```
-Veritabanı Migration'larını Çalıştırın: Docker container’ları çalıştırdıktan sonra, veritabanı migration işlemlerini yapmak için:
-```
- docker-compose exec web python manage.py migrate
-```
-Uygulamaya Erişin: Docker Compose çalıştıktan sonra projeye aşağıdaki adresten erişebilirsiniz:
-http://localhost:8000
+Proje Docker ile çalıştırılmak üzere yapılandırılmıştır. Gerekli adımları izleyerek projeyi Docker üzerinde ayağa kaldırabilirsiniz.
 
 ## Sonuç:
 Proje, tüm gereksinimleri ve bonus özellikleri yerine getirmekte olup, genişletilebilir altyapısı ve detaylı dokümantasyonu ile sorunsuz bir üretim yönetim sistemi sunmaktadır. Bu süreçte ChatGPT'nin büyük katkılarıyla proje daha hızlı ve verimli bir şekilde tamamlanmıştır.
