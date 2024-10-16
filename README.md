@@ -1,4 +1,5 @@
 Hava Aracı Üretim Uygulaması Dökümantasyonu
+
 Proje Amacı:
 Hava Aracı Üretim Uygulaması, belirli takımlara ayrılmış personellerin uçak üretim sürecini yönetmesi için geliştirilmiştir. Her takımın belirli parçaları üretme yetkisi vardır ve Montaj Takımı, bütün bu parçaları bir araya getirerek uçak montajını gerçekleştirir. Parçaların stok durumu, üretim kapasitesi ve montaj süreçleri kontrol edilir, eksiklik durumlarında uyarılar verilir.
 
