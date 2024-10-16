@@ -106,3 +106,113 @@ Proje boyunca aşağıdaki adımlar izlenmiştir:
 5. **Testler:** Birim testleri yazılarak kritik fonksiyonların doğru çalıştığından emin olunmuştur.
 6. **Dokümantasyon:** Proje boyunca her adım detaylı bir şekilde belgelenmiş ve kod yapısı yorum satırlarıyla açıklanmıştır.
 7. **ChatGPT Desteği:** Yukarıda açıklanan alanlarda ChatGPT’den yardım alınarak proje daha verimli bir şekilde tamamlanmıştır.
+
+<h3>Kurulum</h3>
+
+Projeyi klonlayın
+```
+git clone
+```
+
+Proje dizine gidin
+```
+cd havaaraciuretim_django
+```
+
+Proje bağımlılıklarını yükleyin
+```
+pip install -r requirements.txt
+```
+
+setting.py dosyasında veritabanı bağlantısı ayarlarınızı yapın.
+```
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'hava_araci_uretim', # PostgreSQL veritabanı adı
+        'USER': 'postgres', # PostgreSQL kullanıcı adı
+        'PASSWORD': 'Data1234', # PostgreSQL şifre
+        'HOST': 'localhost', # Yerel PostgreSQL sunucusu
+        'PORT': '5432', # PostgreSQL port numarası
+    }
+}
+```
+Migration işlemlerini yapalım
+
+```
+python manage.py migrate
+```
+
+Çalıştıralım
+```
+ python manage.py runserver
+```
+
+<h3>Docker ile Projeyi Ayağa Kaldırma</h3>
+Proje Docker ile çalıştırılmak üzere yapılandırılmıştır. Aşağıdaki adımları izleyerek projeyi Docker üzerinde ayağa kaldırabilirsiniz.
+
+Adımlar:
+Docker ve Docker Compose Yükleyin: Eğer sisteminizde yüklü değilse, Docker ve Docker Compose’u yükleyin.
+Dockerfile ve docker-compose.yml Dosyalarını Ayarlayın: Projeye uygun bir Dockerfile ve docker-compose.yml dosyası oluşturun veya mevcut dosyaları kullanın.
+Dockerfile:
+```
+ # Base image
+FROM python:3.9-slim
+
+# Set environment variables
+ENV PYTHONDONTWRITEBYTECODE=1
+ENV PYTHONUNBUFFERED=1
+
+# Set working directory
+WORKDIR /app
+
+# Install dependencies
+COPY requirements.txt .
+RUN pip install -r requirements.txt
+
+# Copy project files
+COPY . .
+
+# Command to run the application
+CMD ["python", "manage.py", "runserver", "0.0.0.0:8000"]
+```
+docker-compose.yml:
+```
+ version: '3.9'
+
+services:
+  web:
+    build: .
+    command: python manage.py runserver 0.0.0.0:8000
+    volumes:
+      - .:/app
+    ports:
+      - "8000:8000"
+    depends_on:
+      - db
+
+  db:
+    image: postgres
+    environment:
+      POSTGRES_DB: your_db_name
+      POSTGRES_USER: your_db_user
+      POSTGRES_PASSWORD: your_db_password
+    volumes:
+      - postgres_data:/var/lib/postgresql/data/
+
+volumes:
+  postgres_data:
+```
+Docker ile Uygulamayı Çalıştırın: Docker Compose kullanarak tüm servisleri başlatmak için aşağıdaki komutu çalıştırın:
+```
+ docker-compose up --build
+```
+Veritabanı Migration'larını Çalıştırın: Docker container’ları çalıştırdıktan sonra, veritabanı migration işlemlerini yapmak için:
+```
+ docker-compose exec web python manage.py migrate
+```
+Uygulamaya Erişin: Docker Compose çalıştıktan sonra projeye aşağıdaki adresten erişebilirsiniz:
+http://localhost:8000
+
+## Sonuç:
+Proje, tüm gereksinimleri ve bonus özellikleri yerine getirmekte olup, genişletilebilir altyapısı ve detaylı dokümantasyonu ile sorunsuz bir üretim yönetim sistemi sunmaktadır. Bu süreçte ChatGPT'nin büyük katkılarıyla proje daha hızlı ve verimli bir şekilde tamamlanmıştır.
