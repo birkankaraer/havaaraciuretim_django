@@ -1,47 +1,178 @@
-Hava Aracı Üretim Uygulaması
+Hava Aracı Üretim Uygulaması Dökümantasyonu
+Proje Amacı:
+Hava Aracı Üretim Uygulaması, belirli takımlara ayrılmış personellerin uçak üretim sürecini yönetmesi için geliştirilmiştir. Her takımın belirli parçaları üretme yetkisi vardır ve Montaj Takımı, bütün bu parçaları bir araya getirerek uçak montajını gerçekleştirir. Parçaların stok durumu, üretim kapasitesi ve montaj süreçleri kontrol edilir, eksiklik durumlarında uyarılar verilir.
+
+Bu proje, SOLID prensipleri ve DRY prensiplerine uyularak, yazılım mimarisine uygun bir şekilde geliştirilmiştir. Projede modüler yapı ve bağımlılıkların düşük seviyede tutulması hedeflenmiş, her bileşen kendi sorumluluk alanında olacak şekilde organize edilmiştir.
+
+Uygulama İsterleri
+Parçalar:
+Kanat
+Gövde
+Kuyruk
+Aviyonik
+Uçak Modelleri:
+TB2
+TB3
+AKINCI
+KIZILELMA
+Takımlar:
+Kanat Takımı
+Gövde Takımı
+Kuyruk Takımı
+Aviyonik Takımı
+Montaj Takımı
+
+Fonksiyonalite
+Personel giriş ekranı: Personeller sisteme giriş yaparak takımlarına ve rollere göre erişim kazanır.
+![personelgiris](https://github.com/user-attachments/assets/45383e9f-648b-47a1-b2ad-5ea6eaf54dad)
+
+Personelin takımı: Her personel bir takıma bağlıdır ve birden fazla personel aynı takımda yer alabilir.
+![birtakımdabirdenfazlapersonel](https://github.com/user-attachments/assets/9441f702-3fee-4fc5-930e-f5f1e6187ddd)
+
+Takımların kendi parçalarını üretme, listeleme ve geri dönüşüme gönderme işlemleri (CRUD): Her takım sadece sorumlu olduğu parçaları üretebilir, listeleyebilir ve stok azaldığında geri dönüşüme gönderebilir.
+-Üretme
+![parcauretme](https://github.com/user-attachments/assets/bd9c0bc1-2a79-4e4f-918c-1595ab142388)
+-Listeleme
+![parcalisteleme](https://github.com/user-attachments/assets/20b30fee-2421-4851-9abe-a22ec8e3e7e6)
+-Geri dönüşüme gönderme
+![parcageridonusum](https://github.com/user-attachments/assets/8a903454-9ff6-478e-b885-d01b35562e79)
+
+Takımların sadece sorumlulukları dahilindeki parçaları üretmesi: Her takım, yalnızca sorumlu olduğu parçayı üretir.
+![parcauretmekuralı](https://github.com/user-attachments/assets/619c13b0-533f-4f17-ba1d-96c9364027d2)
+
+Montaj Takımı: Montaj Takımı, üretilen parçaları kullanarak uçak montajını gerçekleştirir.
+![montajbasarılı](https://github.com/user-attachments/assets/9ab843cc-45d8-41a8-98c4-18c23fc6030d)
+
+Envanterde eksik parça uyarıları: Eksik parça olduğunda sistem kullanıcıya uyarı verir.
+![envantereksikparcalar](https://github.com/user-attachments/assets/e245f009-c28a-42b8-804b-0cc8fa7b9de8)
+
+Parça-Uçak Eşleşmesi: Her parça, belirli bir uçağa özeldir.
+![ucakmontaj](https://github.com/user-attachments/assets/40574f6e-37bd-4c08-a5e0-7a8e967826c6)
+
+Kullanılan Parçaların Takibi: Montaj sonrası kullanılan parçalar ve uçak bilgisi kaydedilir.
+![montajrapor](https://github.com/user-attachments/assets/47d61e63-6319-4c23-a64c-38218d672ad6)
+
+Bonus Özellikler
+Docker ile Çalışma: Proje Docker ile ayağa kaldırılabilir.
+İyi Hazırlanmış Dökümantasyon: Proje dökümantasyonu ve yorum satırları detaylıdır.
+Birim Testi: Temel fonksiyonlar için birim testleri yazılmıştır.
+DataTable Kullanımı: Listeleme sayfalarında DataTable kullanılmıştır.
+Server-side DataTable: Büyük veri setlerinde performanslı veri işlemleri sağlanmıştır.
+Asenkron Yapı (Ajax): Sayfa yenilemeden asenkron işlemler yapılmıştır.
+İlişkisel Tablolar: İlişkisel tablolar veritabanında ayrı tutulmuştur.
+Ekstra Kütüphaneler: Django Rest Framework ve Swagger kullanılmıştır.
+Bootstrap, Tailwind, jQuery Kullanımı: Ön yüz düzenlemelerinde bu teknolojiler kullanılmıştır.
+API Dokümantasyonu (Swagger): Tüm API’ler Swagger ile belgelenmiştir.
 
 Kullanılan Teknolojiler
-1) Python
-2) Django
-3) Postgresql
-4) Django Rest Framework
-5) Datatable
-6) jQuery
-7) Ajax
-8) Talwind
-9) Bootstrap 
+Python : Uygulama altyapısında kullanılan ana programlama dili.
+Django : Web uygulama çerçevesi olarak Django kullanıldı.
+PostgreSQL: Veritabanı yönetimi için PostgreSQL kullanıldı.
+Django Rest Framework: API geliştirme ve yönetimi için Django Rest Framework kullanıldı.
+Bootstrap: Sayfa düzeni ve stil tasarımı için Bootstrap kullanıldı.
+Tailwind CSS: Ön yüz tasarımında kullanılan CSS framework.
+jQuery: Dinamik ön yüz işlemleri için jQuery kullanıldı.
+Swagger: API dokümantasyonunu sağlamak için Swagger kullanıldı.
+Docker: Projenin container ortamında çalıştırılması için Docker kullanıldı (opsiyonel).
+pgAdmin4: PostgreSQL veritabanı yönetimi için pgAdmin4 kullanıldı.
+DBDiagram: Veritabanı tasarımı için dbdiagram.io kullanıldı.
+ChatGPT: Kod yapısının planlanması, yorumlanması, düzenlenmesi ve projeye dair yazılımsal sorunları çözme süreçlerinde destek teknolojisi olarak kullanıldı.
 
-1- Personel Giriş Ekranı
-![FireShot Capture 162 - Personel Giriş - 127 0 0 1](https://github.com/user-attachments/assets/134626eb-4179-4e3a-a34f-77b3fb2b2182)
-2- Personel Kayıt Ekranı 
-![FireShot Capture 163 -  - 127 0 0 1](https://github.com/user-attachments/assets/55077c6a-5186-4534-891c-c906a716ad3b)
-3- Bir takımda birden fazla personel olabilir
-![FireShot Capture 164 -  - 127 0 0 1](https://github.com/user-attachments/assets/f7b537a3-71bb-42f1-854d-766a727d8c10)
-4- Takımlar kendi parçalarını üretme, listeleme ve geri dönüşüme gönderme işlemlerini yapabiliyor (CRUD) Not: geri dönüşüm ‘delete’ anlamındadır.
--Listeleme
-![FireShot Capture 165 -  - 127 0 0 1](https://github.com/user-attachments/assets/2c7afe02-1d94-4316-96f8-ad9d051aefc8)
--Üretme
-![FireShot Capture 169 -  - 127 0 0 1](https://github.com/user-attachments/assets/79ffd402-f7f0-4cbc-92c5-4d29d59d3389)
--Geri Dönüşüme Gönderme
-![FireShot Capture 176 -  - 127 0 0 1](https://github.com/user-attachments/assets/11821fa2-2b6e-47da-8ac5-05ea0ca728be)
-5-Takımlar kendi sorumluluğundan başka parça üretemiyor.
-![FireShot Capture 170 -  - 127 0 0 1](https://github.com/user-attachments/assets/c9480f00-2ad3-496e-a4e9-48bbb45a1afe)
-6-Montaj takımının bütün uyumlu parçaları birleştirerek 1 uçak üretebiliyor.
-![FireShot Capture 174 -  - 127 0 0 1](https://github.com/user-attachments/assets/8cb508dd-07b3-4295-bcd1-3958f9cc3db6)
-7-Her parça uçağa özeldir.
-8-Montaj takımı üretilen uçakları listeleyebilir.
-![FireShot Capture 175 -  - 127 0 0 1](https://github.com/user-attachments/assets/4d24d8d9-e72d-400b-b709-f4d41f6173cd)
-9-Envanterde eksik parça olduğunda uyarı veriyor.
-![FireShot Capture 173 -  - 127 0 0 1](https://github.com/user-attachments/assets/b43055d1-0030-467d-9f43-04aabbcb95a2)
-10- 1 uçakta kullanılan parça başka uçakta kullanılamıyor, stok sayısından azaltma yapılıyor.
-![Ekran görüntüsü 2024-10-15 045438](https://github.com/user-attachments/assets/a152282b-ce75-40ff-a630-35a9100b02bf)
-11- Uçaklar için bütün parçaları oluşturup monte ettikten sonra kullanılan parçaların sayısını ve hangi uçakta kullanıldığının bilgisi tutuluyor.
-![FireShot Capture 175 -  - 127 0 0 1](https://github.com/user-attachments/assets/d219e3f4-754e-4d46-9d42-05f032f8cc38)
-12- Veri tabanı diyagramı 
-![Untitled](https://github.com/user-attachments/assets/a109e43b-ec02-42d0-b450-22cf0342b019)
+Veritabanı Tasarımı
+Veritabanı tasarımı yapılırken dbdiagram.io kullanılarak ilişkiler doğru bir şekilde modellenmiştir. Proje many-to-many ilişkiler ve code-first yaklaşımları kullanarak geliştirilmiştir. Her model, projedeki işlevsellikleri karşılayacak şekilde tasarlanmış ve bu modellemeye uygun olarak PostgreSQL üzerinde yapılandırılmıştır.
+Veritabanı yönetimi için pgAdmin4 kullanılarak tablo oluşturma, veri ekleme ve SQL sorguları yönetilmiştir. Bu süreçte SQL komutlarıyla veritabanı işlemleri yönetilmiş, veritabanı migration'ları da Django üzerinden gerçekleştirilmiştir.
 
+SOLID ve DRY Prensiplerine Uyum
+Projede yazılım geliştirme süreçlerinde SOLID prensiplerine dikkat edilmiştir. Tek Sorumluluk İlkesi (Single Responsibility Principle), her modelin ve sınıfın sadece tek bir işlevi yerine getirmesi gerektiğini savunur. Buna dayanarak, her sınıfın sorumlulukları belirlenmiş ve birbirinden ayrılmıştır.
+Aynı zamanda, Don't Repeat Yourself (DRY) prensibiyle tekrarlayan kodlardan kaçınılmış, yeniden kullanılabilirlik ön planda tutulmuştur. Bu sayede modüler ve genişletilebilir bir yapı kurulmuştur.
 
+ChatGPT Desteği
+Bu proje boyunca ChatGPT teknolojisinden büyük ölçüde yararlanıldı. Özellikle aşağıdaki alanlarda ChatGPT aktif olarak kullanıldı:
 
+Kod Düzenleme ve Optimize Etme: Proje boyunca kodların okunabilirliğini artırma, SOLID ve DRY prensiplerine uygun hale getirme konusunda ChatGPT’den destek alındı.
+Yorum Satırları: Kod yapısına uygun ve anlamlı yorum satırları eklenmesi sürecinde ChatGPT kullanılarak kodların açıklamaları yazıldı.
+Dokümantasyon Hazırlama: Proje dökümantasyonunun düzenlenmesi, eksikliklerin giderilmesi ve açıklamaların netleştirilmesi için ChatGPT’den faydalanıldı.
+Hataların Çözümü: Proje geliştirilirken karşılaşılan teknik sorunların çözümü için ChatGPT rehberlik etti ve sorunsuz ilerlemeye katkıda bulundu.
+Test Yazımı: Birim testlerin yazımı, fonksiyonların test edilmesi ve yapılandırılması sürecinde ChatGPT destek verdi.
+Projenin Geliştirme Süreci
+Projeye başlamadan önce proje gereksinimleri detaylı bir şekilde analiz edilmiş ve gereksinimlere uygun bir geliştirme planı oluşturulmuştur. 
 
+Proje boyunca aşağıdaki adımlar izlenmiştir:
+Planlama: Proje gereksinimlerine göre yazılım mimarisi ve veri modelleme yapılmıştır.
+Veritabanı Tasarımı: Veritabanı ilişkileri dbdiagram.io üzerinde planlanmış, ardından PostgreSQL üzerinde uygulamaya geçirilmiştir.
+Modelleme: Django’nun code-first yaklaşımıyla modeller oluşturulmuş ve many-to-many ilişkiler eklenmiştir.
+Uygulama Geliştirme: Gereksinimlere göre uygulamanın tüm fonksiyonları kodlanmış, her bileşenin sorumluluğu doğru bir şekilde belirlenmiştir.
+Testler: Birim testleri yazılarak kritik fonksiyonların doğru çalıştığından emin olunmuştur.
+Dokümantasyon: Proje boyunca her adım detaylı bir şekilde belgelenmiş ve kod yapısı yorum satırlarıyla açıklanmıştır.
+ChatGPT Desteği: Yukarıda açıklanan alanlarda ChatGPT’den yardım alınarak proje daha verimli bir şekilde tamamlanmıştır.
 
+Docker ile Projeyi Ayağa Kaldırma
+Proje Docker ile çalıştırılmak üzere yapılandırılmıştır. Aşağıdaki adımları izleyerek projeyi Docker üzerinde ayağa kaldırabilirsiniz.
+
+Adımlar:
+Docker ve Docker Compose Yükleyin: Eğer sisteminizde yüklü değilse, Docker ve Docker Compose’u yükleyin.
+Dockerfile ve docker-compose.yml Dosyalarını Ayarlayın: Projeye uygun bir Dockerfile ve docker-compose.yml dosyası oluşturun veya mevcut dosyaları kullanın.
+Dockerfile:
+
+dockerfile
+# Base image
+FROM python:3.9-slim
+
+# Set environment variables
+ENV PYTHONDONTWRITEBYTECODE=1
+ENV PYTHONUNBUFFERED=1
+
+# Set working directory
+WORKDIR /app
+
+# Install dependencies
+COPY requirements.txt .
+RUN pip install -r requirements.txt
+
+# Copy project files
+COPY . .
+
+# Command to run the application
+CMD ["python", "manage.py", "runserver", "0.0.0.0:8000"]
+docker-compose.yml:
+
+yaml
+version: '3.9'
+
+services:
+  web:
+    build: .
+    command: python manage.py runserver 0.0.0.0:8000
+    volumes:
+      - .:/app
+    ports:
+      - "8000:8000"
+    depends_on:
+      - db
+
+  db:
+    image: postgres
+    environment:
+      POSTGRES_DB: your_db_name
+      POSTGRES_USER: your_db_user
+      POSTGRES_PASSWORD: your_db_password
+    volumes:
+      - postgres_data:/var/lib/postgresql/data/
+
+volumes:
+  postgres_data:
+Docker ile Uygulamayı Çalıştırın: Docker Compose kullanarak tüm servisleri başlatmak için aşağıdaki komutu çalıştırın:
+
+bash
+docker-compose up --build
+Veritabanı Migration'larını Çalıştırın: Docker container’ları çalıştırdıktan sonra, veritabanı migration işlemlerini yapmak için başka bir terminal penceresinde aşağıdaki komutu çalıştırın:
+
+bash
+docker-compose exec web python manage.py migrate
+Uygulamaya Erişin: Docker Compose çalıştıktan sonra projeye aşağıdaki adresten erişebilirsiniz:
+
+arduino
+http://localhost:8000
+Sonuç:
+Proje, tüm gereksinimleri ve bonus özellikleri yerine getirmekte olup, genişletilebilir altyapısı ve detaylı dokümantasyonu ile sorunsuz bir üretim yönetim sistemi sunmaktadır. Bu süreçte ChatGPT'nin büyük katkılarıyla proje daha hızlı ve verimli bir şekilde tamamlanmıştır.
 
